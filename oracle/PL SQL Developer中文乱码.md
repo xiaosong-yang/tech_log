@@ -1,0 +1,1 @@
+﻿oracle数据库客户端PL SQL Developer出现中文乱码解决方法：进入客户端，执行sql：select * from nls_database_parameters where parameter ='NLS_CHARACTERSET'查询出数据库的编码格式，我这里查询出来为ZHS16GBK，然后在环境变量设置界面，添加系统环境变量，变量名为NLS_LANG，值为：AMERICAN_AMERICA.ZHS16GBK。（值得后半部分即为数据库的编码格式）
