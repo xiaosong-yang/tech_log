@@ -8,3 +8,11 @@
 - git diff HEAD：是查看 workspace 和 local repository 的差别的。（HEAD 指向的是 local repository 中最新提交的版本）
 
 注：git diff 后跟两个参数，如果只写一个参数，表示默认跟 workspace中的代码作比较。git diff 显示的结果为 第二个参数所指的代码在第一个参数所指代码基础上的修改。如，git diff HEAD 表示 workspace 在 最新commit的基础上所做的修改
+
+
+
+#### git配置ssh免密登录
+1. 我们打开gitbash执行命令ssh-keygen，然后一路回车，就会在我们c盘的用户目录下生成公私钥，比如我的就是在这里：
+![git_ssh_create_rsa](..\picture_back_up\git_ssh_create_rsa.png)
+然后将上图中的id_rsa.pub中的内容拷贝到git或者gitlab或者github之类的ssh设置中，如下图。
+![git_ssh_create_rsa](..\picture_back_up\github_ssh_set_rsa.png)
