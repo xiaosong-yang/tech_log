@@ -19,7 +19,7 @@
 }
 ```
 上面的函数变量的案例可以改写成Lambda表达式
-```
+```kotlin
     var sum: (Int, Int) -> Int
     sum = { a: Int, b: Int ->
         a + b
