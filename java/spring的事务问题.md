@@ -38,3 +38,36 @@ class B{
 
 
 
+### required事务嵌套异常
+&ensp;&ensp;&ensp;&ensp;上面有写required的传播是如果当前在事务中就直接使用已经有的事务，但是如果内部事务抛出了一个异常，然后在外部事务中捕获了就会造成外部事务无法提交:
+```java
+class A{
+
+    @Transcational
+    public void fun1(){
+        int a = 1/0;
+    }
+}
+
+class B{
+
+    @AutoWired
+    A a;
+
+    @Transcational
+    public void fun2(){
+        try{
+            a.fun1()
+        }catch(Exception e){
+            e.printStack()
+        }
+
+        //其他内容
+        ……………………     
+    }
+    
+}
+```
+上面的B类中对A类的fun1的异常进行了catch，但是B的事务还是会被回滚掉,如下图
+![](../picture_back_up/required_transcational_exception.png)
+当ServiceA执行完自身全部业务，准备commit事务时，检查发现事务已被标志为rollback。则不予commit，并且抛出异常：“Transaction rolled back because it has been marked as rollback-only”
