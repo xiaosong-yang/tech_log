@@ -21,4 +21,35 @@
 
 
 #### $out
-这个命令可以
+这个命令可以聚合统计的数据写入到一张新表中，一般在整个聚合操作流程的最后一步：
+```javascript
+db.users.aggregate()
+    .match({time:{$gte:ISODate("2020-07-01T10:00:00.000+08:00"),$lt:ISODate("2020-08-01T10:00:00.000+08:00")},qd:"Channel_001"})
+    .group({
+          _id: null,
+          "sum":{$sum:1}
+    })
+    .project({})
+    .sort({_id:-1})
+    .limit(100)
+    .out("output-collection")
+```
+但是这个命令有一个坑人的地方就是，每次重新执行$out命令时，这张表都会被覆盖掉，不能进行追加数据。所以该命令适合做单次聚合结果导出的临时表。
+
+
+
+#### $merge
+这个命令和$out类似，是将聚合结果导出到某一张表的命令，区别在于merge不会覆盖原有数据，会进行合并：
+```javascript
+db.users.aggregate()
+    .match({time:{$gte:ISODate("2020-07-01T10:00:00.000+08:00"),$lt:ISODate("2020-08-01T10:00:00.000+08:00")},qd:"Channel_001"})
+    .group({
+          _id: null,
+          "sum":{$sum:1}
+    })
+    .project({})
+    .sort({_id:-1})
+    .limit(100)
+    .merge({into: { db: "db", coll: "new_col" }, on: "_id",  whenMatched: "replace", whenNotMatched: "insert"})
+```
+可以看到merge还有子指令，into指明导出目标表，db为库名，coll为具体的表名，on是合并时的依据字段，比如这里以id为基准进行合并，如果id重复了，就会replace新数据覆盖老数据，如果id没有重复，就会直接插入新数据。所以这个命令比out强大，但是这个命令是到了mongo4.2以后才出来的，如果mongo版本太老了，就无法使用了。
