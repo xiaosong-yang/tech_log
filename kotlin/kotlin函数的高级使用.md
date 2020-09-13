@@ -18,11 +18,7 @@
     逻辑块
 }
 ```
-<<<<<<< HEAD
-上面的函数变量的案例可以改写成Lambda表达式
-=======
 Lambda表达式中不要使用return，表达式的最后一行默认为表达式的返回值，如果使用return则返回的不是表达式，而是外部的整个函数。上面的函数变量的案例可以改写成Lambda表达式
->>>>>>> 92f9b39ea8d969d09454784399f6432e2cc7debe
 ```kotlin
     var sum: (Int, Int) -> Int
     sum = { a: Int, b: Int ->
