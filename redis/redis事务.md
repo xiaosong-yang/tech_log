@@ -1,0 +1,1 @@
+&ensp;&ensp;&ensp;&ensp;我们在使用mysql，oracle又或者mongo之类的数据库时，通常会使用事务来保持多条指令的一致性，
