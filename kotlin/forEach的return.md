@@ -1,0 +1,1 @@
+&ensp;&ensp;&ensp;&ensp;对于列表的forEach函数是我们经常用到的，函数中带入一个lambda表达式完成对整个列表的每个元素进行处理。
