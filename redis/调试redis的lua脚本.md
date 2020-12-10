@@ -48,4 +48,4 @@ redis.breakpoint()   Stop execution as if there was a breakpoint in the
 
 
 
-需要注意的是，不管那种方式进行调试，其实都是不会对redis里真正的key有影响，其次如果需要传入类似我上面那种json，需要传入转义之后的，就是"必须携程\"才行，否则redis无法识别。
+需要注意的是，不管那种方式进行调试，其实都是不会对redis里真正的key有影响，其次如果需要传入类似我上面那种json，需要传入转义之后的，就是"必须写成\\"才行，否则redis无法识别。
