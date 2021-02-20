@@ -18,3 +18,32 @@ db.test_col.update({ _id: 1 }, { $push: { "list": { $each: [{ "list.name": "eee"
         ttlLogMongo.upsert(query, update, ChatSessionLog::class.java)
     }
 ```
+&ensp;&ensp;&ensp;&ensp;有时候，我们希望这个固定大小的队列是从尾部插入的，然后被剔除的元素是头部的，则需要修改slice参数为负数，并将atPosition(0)去除，如下：
+```java
+    fun save(id: String, user1: ChatSessionLog.UserInfo, user2: ChatSessionLog.UserInfo, latestChat: ChatSessionLog.ChatContent) {
+        val query = Query.query(Criteria.where("_id").`is`(id))
+        val update = Update()
+                .set("user1", user1)
+                .set("user2", user2)
+                .set("update_time", LocalDateTime.now())
+                .set("read_flag", 0)
+                .push("latest_chat_content")).slice(-4).each(latestChat)
+        ttlLogMongo.upsert(query, update, ChatSessionLog::class.java)
+    }
+```
+
+
+&ensp;&ensp;&ensp;&ensp;有时候，我们希望这个固定大小的队列是从尾部插入的，然后被剔除的元素是头部的，则需要修改slice参数为负数，并将atPosition(0)去除，如下：
+```java
+    fun save(id: String, user1: ChatSessionLog.UserInfo, user2: ChatSessionLog.UserInfo, latestChat: ChatSessionLog.ChatContent) {
+        val query = Query.query(Criteria.where("_id").`is`(id))
+        val update = Update()
+                .set("user1", user1)
+                .set("user2", user2)
+                .set("update_time", LocalDateTime.now())
+                .set("read_flag", 0)
+                .push("latest_chat_content")).slice(-4).each(latestChat)
+        ttlLogMongo.upsert(query, update, ChatSessionLog::class.java)
+    }
+```
+
